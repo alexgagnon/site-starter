@@ -1,0 +1,122 @@
+{
+  "name": "node-starter",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "wireit",
+    "dev": "wireit",
+    "format": "wireit",
+    "lint": "wireit",
+    "test": "wireit",
+    "start": "node --require pino-debug --import ./dist/instrumentation.js ./dist/index.js",
+    "pm2": "pm2 start ecosystem.config.cjs",
+    "prepare": "husky"
+  },
+  "wireit": {
+    "build": {
+      "dependencies": [
+        "tsc"
+      ]
+    },
+    "dev": {
+      "command": "vite-node src/index.ts",
+      "files": [
+        "./src/**/*.{ts,js}",
+        "vite.config.ts",
+        "package.json"
+      ],
+      "env": {
+        "DEBUG": "node-starter:*",
+        "DEBUG_HIDE_DATE": "true",
+        "NODE_ENV": "production"
+      }
+    },
+    "format": {
+      "command": "prettier .",
+      "files": [
+        "./src/**/*.{ts,js,md}",
+        "package.json",
+        ".prettierrc",
+        ".editorconfig"
+      ],
+      "output": []
+    },
+    "lint": {
+      "command": "eslint --color .",
+      "files": [
+        "src/**/*.{ts,js}",
+        "eslint.config.mjs",
+        "tsconfig*.json"
+      ],
+      "output": []
+    },
+    "test": {
+      "command": "vitest run",
+      "files": [
+        "src/**",
+        "package.json",
+        "vite.config.mts"
+      ],
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "tsc": {
+      "command": "tsc --build --pretty",
+      "clean": "if-file-deleted",
+      "files": [
+        "src/**/*.{ts,js}",
+        "package.json",
+        "tsconfig*.json"
+      ],
+      "output": [
+        "dist/**",
+        ".tsbuildinfo"
+      ]
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@opentelemetry/api": "^1.9.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.48.0",
+    "@opentelemetry/sdk-metrics": "^1.25.1",
+    "@opentelemetry/sdk-node": "^0.52.1",
+    "@opentelemetry/sdk-trace-node": "^1.25.1",
+    "agentkeepalive": "^4.5.0",
+    "node-fetch": "^3.3.2",
+    "pino": "^9.3.1",
+    "pino-debug": "^2.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.7.0",
+    "@types/debug": "^4.1.12",
+    "@types/eslint__js": "^8.42.3",
+    "@types/eslint-config-prettier": "^6.11.3",
+    "@types/node": "^20.14.10",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.7",
+    "prettier": "^3.3.3",
+    "type-fest": "^4.22.1",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^7.16.1",
+    "vite-node": "^2.0.2",
+    "vitest": "^2.0.2",
+    "wireit": "^0.14.5"
+  },
+  "lint-staged": {
+    "*": [
+      "npm run format -- --check",
+      "npm run lint"
+    ]
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

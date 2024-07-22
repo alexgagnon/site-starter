@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "esnext", // Keep the JavaScript version as modern as possible
+    "lib": ["esnext"], // Remove unneeded types like DOM APIs
+    "module": "nodenext", // Use ES modules
+    "esModuleInterop": true,
+    "declaration": false, // Do not generate declaration files
+    "removeComments": false, // Retain comments
+    "strict": false, // Disable all strict type-checking options
+    "noEmitOnError": false, // Emit output files even if there are errors
+    "noEmitHelpers": true, // Disable emitting helper functions
+    "noEmit": false, // Allow emitting files
+    "downlevelIteration": false, // Do not transpile iteration
+    "emitDecoratorMetadata": false, // Do not emit decorator metadata
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "preserveConstEnums": true, // Preserve const enums
+    "stripInternal": true, // Strip internal types
+    "noImplicitAny": false, // Allow implicit any types
+    "allowJs": true, // Allow JavaScript files to be compiled
+    "checkJs": false, // Do not check JavaScript files
+    "resolveJsonModule": true, // Enable JSON module resolution
+    "incremental": true, // Enable incremental compilation
+    "tsBuildInfoFile": ".tsbuildinfo", // Incremental compilation file
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["src/**/*", "eslint.config.js", "vite.config.ts"],
+  "exclude": ["ecosystem.config.cjs"]
+}
