@@ -1,0 +1,69 @@
+---
+interface Props {
+  companyLegalName: string;
+}
+
+const { companyLegalName } = Astro.props;
+---
+
+<footer>
+  <section id='branding'>
+    <h2>Monad Media</h2>
+    <p>Building the web, one component at a time.</p>
+  </section>
+  <section id='sitemap'>
+    <h2>Sitemap</h2>
+    <ul>
+      <li><a href='/'>Home</a></li>
+      <li><a href='/about'>About</a></li>
+      <li><a href='/services'>Services</a></li>
+      <li><a href='/contact'>Contact</a></li>
+    </ul>
+  </section>
+  <section id='contact'>
+    <h2>Contact</h2>
+    <p>1234 Elm St.<br />Springfield, IL 62701</p>
+    <p>217-555-1234</p>
+  </section>
+  <p id='copyright'>© {new Date().getFullYear()}, {companyLegalName}</p>
+  <p id='attribution'>Built by <a target="_blank" href='https://monad.media'>Monad Media</a></p>
+</footer>
+<style>
+  footer {
+    display: grid;
+    grid-template-areas:
+      "branding"
+      "sitemap"
+      "contact"
+      "copyright"
+      "attribution";
+  }
+
+  @media screen and (min-width: 768px) {
+    footer {
+      grid-template-areas:
+        "branding sitemap contact"
+        "copyright attribution attribution";
+    }
+  }
+
+  #branding {
+    grid-area: branding;
+  }
+
+  #sitemap {
+    grid-area: sitemap;
+  }
+
+  #contact {
+    grid-area: contact;
+  }
+
+  #copyright {
+    grid-area: copyright;
+  }
+
+  #attribution {
+    grid-area: attribution;
+  }
+</style>

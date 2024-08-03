@@ -1,0 +1,81 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import config from '../../site.config.json' with { type: 'json' };
+import { debug } from '../util/debug.js';
+import type { Font } from '../env.d';
+
+const { siteTitle, companyLegalName } = config;
+
+const { title, description, og } = Astro.props.frontmatter || Astro.props;
+
+// set up the fonts to download
+let fonts: Font[] = [];
+if (import.meta.env.SSR) {
+  const { getFonts } = await import('../util/fonts.js');
+  fonts = await getFonts() ?? [];
+}
+else {
+  // if we're not in SSR, need to manually populate this
+  fonts = [];
+}
+
+debug('Fonts:', fonts);
+
+---
+
+<!DOCTYPE html>
+<html lang="en" class='no-js' data-fonts={JSON.stringify(fonts)}>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title} | {siteTitle}</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="description" content={description}>
+  <link rel='preload' href='./svg/sprite.css.svg' as='fetch' type='image/svg+xml' crossorigin='anonymous'>
+  <script type="module" is:inline>
+    document.documentElement.classList.remove('no-js');
+    const fontData = document.documentElement.dataset.fonts;
+    if (localStorage.getItem('debug')) {
+      console.debug('Fonts:', fontData);
+    }
+    const fonts = fontData
+      ? JSON.parse(fontData).map(
+          font => new FontFace(font.family, font.source, font.descriptors)
+        )
+      : [
+          // Add your fonts here, e.g. new FontFace('Inter', 'url(/fonts/inter.woff2)', { weight: 400, style: 'normal' }),
+          // https://developer.mozilla.org/en-US/docs/Web/API/CSS_Font_Loading_API
+        ];
+
+    await Promise.allSettled(
+      fonts.map((font) => {
+        document.fonts.add(font);
+        return font.load();
+      })
+    ).then((results) => {
+      document.documentElement.classList.add('fonts-loaded');
+      results.forEach((result) => {
+        if (result.status === 'rejected') {
+          console.error(result.reason);
+        }
+      });
+    });
+  </script>
+  {og && (
+    <>
+      <meta property="og:title" content={og.title} />
+      <meta property="og:description" content={og.description} />
+      <meta property="og:image" content={og.image} />
+      <meta property="og:type" content={og.type} />
+    </>
+  )}
+</head>
+<body>
+  <Header></Header>
+  <main>
+    <slot></slot>
+  </main>
+  <Footer companyLegalName={companyLegalName}></Footer>
+</body>
+</html>

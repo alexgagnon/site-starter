@@ -1,0 +1,27 @@
+{
+  "id": "template",
+  "siteTitle": "Site Title",
+  "slogan": "Slogan",
+  "companyLegalName": "Monad Media Inc.",
+  "fonts": [
+    {
+      "family": "Mulish",
+      "variants": {
+        "regular": {
+          "subset": "US_ASCII"
+        },
+        "italic": {
+          "subset": "US_ASCII"
+        }
+      },
+      "variable": true
+    }
+  ],
+  "build": {
+    "output": "static",
+    "publicDir": "public",
+    "distDir": "dist",
+    "assetsDir": "assets",
+    "srcDir": "src"
+  }
+}

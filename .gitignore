@@ -1,3 +1,4 @@
+*.env
 .wireit/
 dist/
 node_modules/

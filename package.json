@@ -5,37 +5,81 @@
   "main": "./dist/index.js",
   "scripts": {
     "build": "wireit",
+    "css:critical": "wireit",
     "dev": "wireit",
+    "fonts:download": "wireit",
+    "fonts:subset": "wireit",
+    "fonts": "wireit",
     "format": "wireit",
     "lint": "wireit",
-    "test": "wireit",
-    "start": "node --require pino-debug --import ./dist/instrumentation.js ./dist/index.js",
-    "pm2": "pm2 start ecosystem.config.cjs",
-    "prepare": "husky"
+    "prepare": "husky",
+    "preview": "wireit",
+    "svg": "wireit"
   },
   "wireit": {
     "build": {
+      "command": "astro check && astro build",
       "dependencies": [
-        "tsc"
+        "fonts:subset"
+      ],
+      "files": [
+        "src/**/*",
+        "public/**/*",
+        "astro.config.mjs",
+        "tsconfig.json",
+        "vite.config.ts"
+      ],
+      "output": [
+        "dist/**/*"
       ]
     },
+    "css:critical": {
+      "command": "critical index.html --base dist --inline --width 1440 --height 900 --ignore-external"
+    },
     "dev": {
-      "command": "vite-node src/index.ts",
+      "command": "astro dev",
       "files": [
-        "./src/**/*.{ts,js}",
+        "src/",
+        "public/",
         "vite.config.ts",
-        "package.json"
+        "package.json",
+        "tsconfig.json",
+        "astro.config.mjs"
       ],
       "env": {
-        "DEBUG": "node-starter:*",
-        "DEBUG_HIDE_DATE": "true",
         "NODE_ENV": "production"
-      }
+      },
+      "service": true
+    },
+    "fonts:download": {
+      "command": "vite-node ./lib/download-fonts.ts",
+      "files": [
+        "lib/download-fonts.ts"
+      ],
+      "output": [
+        "assets/fonts/**/*"
+      ]
+    },
+    "fonts:subset": {
+      "command": "vite-node ./lib/subset-fonts.ts",
+      "files": [
+        "lib/subset-fonts.ts",
+        "assets/fonts/**/*"
+      ],
+      "output": [
+        "public/fonts/**/*"
+      ]
+    },
+    "fonts": {
+      "dependencies": [
+        "fonts:download",
+        "fonts:subset"
+      ]
     },
     "format": {
       "command": "prettier .",
       "files": [
-        "./src/**/*.{ts,js,md}",
+        "./src/**/*.{ts,js,md,astro}",
         "package.json",
         ".prettierrc",
         ".editorconfig"
@@ -51,6 +95,23 @@
       ],
       "output": []
     },
+    "preview": {
+      "command": "astro preview",
+      "dependencies": [
+        "build"
+      ],
+      "service": true
+    },
+    "svg": {
+      "command": "svg-sprite --symbol --symbol-dest public assets/svg/*.svg",
+      "files": [
+        "assets/svg/",
+        "package.json"
+      ],
+      "output": [
+        "public/svg/"
+      ]
+    },
     "test": {
       "command": "vitest run",
       "files": [
@@ -61,19 +122,6 @@
       "env": {
         "NODE_ENV": "production"
       }
-    },
-    "tsc": {
-      "command": "tsc --build --pretty",
-      "clean": "if-file-deleted",
-      "files": [
-        "src/**/*.{ts,js}",
-        "package.json",
-        "tsconfig*.json"
-      ],
-      "output": [
-        "dist/**",
-        ".tsbuildinfo"
-      ]
     }
   },
   "keywords": [],
@@ -81,37 +129,35 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@opentelemetry/api": "^1.9.0",
-    "@opentelemetry/auto-instrumentations-node": "^0.48.0",
-    "@opentelemetry/sdk-metrics": "^1.25.1",
-    "@opentelemetry/sdk-node": "^0.52.1",
-    "@opentelemetry/sdk-trace-node": "^1.25.1",
-    "agentkeepalive": "^4.5.0",
-    "node-fetch": "^3.3.2",
-    "pino": "^9.3.1",
-    "pino-debug": "^2.0.0"
+    "@astrojs/lit": "^4.3.0",
+    "@astrojs/sitemap": "^3.1.6",
+    "@webcomponents/template-shadowroot": "^0.2.1",
+    "astro": "^4.12.2",
+    "lit": "^3.1.4"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.8.3",
     "@eslint/js": "^9.7.0",
-    "@types/debug": "^4.1.12",
     "@types/eslint__js": "^8.42.3",
     "@types/eslint-config-prettier": "^6.11.3",
-    "@types/node": "^20.14.10",
+    "@types/node": "^20.14.12",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-astro": "^1.2.3",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.7",
     "prettier": "^3.3.3",
+    "svg-sprite": "^2.0.4",
     "type-fest": "^4.22.1",
     "typescript": "^5.5.3",
     "typescript-eslint": "^7.16.1",
-    "vite-node": "^2.0.2",
-    "vitest": "^2.0.2",
+    "vite-node": "^2.0.4",
+    "vitest": "^2.0.4",
     "wireit": "^0.14.5"
   },
   "lint-staged": {
-    "*": [
+    "*.{js,ts,md,mdx,astro}": [
       "npm run format -- --check",
       "npm run lint"
     ]
