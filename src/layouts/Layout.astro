@@ -1,9 +1,11 @@
 ---
-import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import config from '../../site.config.json' with { type: 'json' };
 import { debug } from '../util/debug.js';
 import type { Font } from '../env.d';
+import '../../../ferment-ui/packages/core/dist/fui.css';
+import '../../../ferment-ui/packages/core/src/index.ts';
+import '../assets/styles.css';
 
 const { siteTitle, companyLegalName } = config;
 
@@ -35,10 +37,13 @@ debug('Fonts:', fonts);
   <link rel='preload' href='./svg/sprite.css.svg' as='fetch' type='image/svg+xml' crossorigin='anonymous'>
   <script type="module" is:inline>
     document.documentElement.classList.remove('no-js');
+
     const fontData = document.documentElement.dataset.fonts;
+
     if (localStorage.getItem('debug')) {
       console.debug('Fonts:', fontData);
     }
+
     const fonts = fontData
       ? JSON.parse(fontData).map(
           font => new FontFace(font.family, font.source, font.descriptors)
@@ -72,8 +77,31 @@ debug('Fonts:', fonts);
   )}
 </head>
 <body>
-  <Header></Header>
-  <main>
+  <header>
+    <a href="#main" id="skip-link">Skip to main content</a>
+    <nav>
+      <ul class='row end ls-none'>
+        <li><a href="/about">About us</a></li>
+        <li><fui-email-address user='ofni' domain='ac.smcytilibaiv' mailto='true'></fui-email-address></li>
+      </ul>
+      <ul class='row ls-none'>
+        <li class='mr-auto'><a href="/"><svg href='svg/sprite.css.svg/logo'></svg></a></li>
+        <li>
+          <a href="/absence-management">Absence Management Solutions</a>
+          <ul class='dropdown ls-none column center'>
+            <li><a href="/present-ability">Present-ABILITY</a></li>
+            <li><a href="/renew-ability">Renew-ABILITY</a></li>
+            <li><a href="/occ-ability">Occ-ABILITY</a></li>
+            <li><a href="/adapt-ability">Adapt-ABILITY</a></li>
+            <li><a href='/contact'>Get a quote</a></li>
+          </ul>
+        </li>
+        <li><a href="/hr-solutions">HR General Solutions</a></li>
+        <li><a href="/occupational-health-solutions">Occupational Health Solutions</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="main">
     <slot></slot>
   </main>
   <Footer companyLegalName={companyLegalName}></Footer>

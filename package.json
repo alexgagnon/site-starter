@@ -132,11 +132,12 @@
     "@astrojs/lit": "^4.3.0",
     "@astrojs/sitemap": "^3.1.6",
     "@webcomponents/template-shadowroot": "^0.2.1",
-    "astro": "^4.12.2",
+    "astro": "^4.13.1",
+    "ferment-ui": "file:../ferment-ui/packages/core",
     "lit": "^3.1.4"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.8.3",
+    "@astrojs/check": "^0.9.1",
     "@eslint/js": "^9.7.0",
     "@types/eslint__js": "^8.42.3",
     "@types/eslint-config-prettier": "^6.11.3",
