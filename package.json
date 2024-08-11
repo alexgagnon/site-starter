@@ -41,7 +41,6 @@
       "files": [
         "src/",
         "public/",
-        "vite.config.ts",
         "package.json",
         "tsconfig.json",
         "astro.config.mjs"
