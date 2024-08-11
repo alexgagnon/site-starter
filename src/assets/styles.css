@@ -28,15 +28,18 @@
   white-space: nowrap;
 }
 
+.dropdown {
+  position: absolute;
+}
+
 * > .dropdown {
-  display: none;
   opacity: 0;
+  transition: opacity 0.3s;
 }
 
 *:hover + .dropdown,
 *:focus + .dropdown,
-*:focus-within + .dropdown {
-  display: block;
+.dropdown:focus-within {
   opacity: 1;
 }
 
@@ -44,5 +47,18 @@
   list-style: none;
   display: flex;
   flex-direction: row;
-  justify-content: stretch;
+  justify-content: space-between;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel > * {
+  flex: 0 0 90%;
+  scroll-snap-align: center;
 }

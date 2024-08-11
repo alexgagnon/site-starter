@@ -4,8 +4,8 @@ import config from '../../site.config.json' with { type: 'json' };
 import { debug } from '../util/debug.js';
 import type { Font } from '../env.d';
 import '../../../ferment-ui/packages/core/dist/fui.css';
-import '../../../ferment-ui/packages/core/src/index.ts';
 import '../assets/styles.css';
+import { FUIEmailAddress } from '../../../ferment-ui/packages/core/dist/index.js';
 
 const { siteTitle, companyLegalName } = config;
 
@@ -82,10 +82,10 @@ debug('Fonts:', fonts);
     <nav>
       <ul class='row end ls-none'>
         <li><a href="/about">About us</a></li>
-        <li><fui-email-address user='ofni' domain='ac.smcytilibaiv' mailto='true'></fui-email-address></li>
+        <li><FUIEmailAddress user='ofni' domain='ac.smcytilibaiv' mailto='true' client:load><svg slot='prefix'><use href='/svg/sprite.css.svg#i-email' /></svg></FUIEmailAddress></li>
       </ul>
       <ul class='row ls-none'>
-        <li class='mr-auto'><a href="/"><svg href='svg/sprite.css.svg/logo'></svg></a></li>
+        <li class='mr-auto'><a href="/"><svg href='svg/sprite.css.svg#logo'></svg></a></li>
         <li>
           <a href="/absence-management">Absence Management Solutions</a>
           <ul class='dropdown ls-none column center'>

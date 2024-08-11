@@ -14,40 +14,20 @@ import Layout from '../layouts/Layout.astro';
   <section>
     <h3>Amazing service #1</h3>
     <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni in culpa voluptate modi. A cupiditate perspiciatis dignissimos quos, labore optio temporibus facilis illum recusandae iure rem ad, tenetur dolore delectus?</p>
-    <a href='/about'>Learn more about us <svg use='/assets/sprite.css.svg#right-arrow'></svg></a>
+    <a href='/about'>Learn more about us <svg><use href='/svg/sprite.css.svg#i-arrow' /></svg></a>
   </section>
   <section>
     <h3>Customizable Solutions</h3>
     <p>Lorem ipsum</p>
-    <ul class='carousel'>
-      <li>
-        <article class='card'>
-          <h4>1</h4>
-          <p>1</p>
-          <a href="/1">1</a>
-        </article>
-      </li>
-      <li>
-        <article class='card'>
-          <h4>2</h4>
-          <p>2</p>
-          <a href="/2">2</a>
-        </article>
-      </li>
-      <li>
-        <article class='card'>
-          <h4>3</h4>
-          <p>3</p>
-          <a href="/3">3</a>
-        </article>
-      </li>
-      <li>
-        <article class='card'>
-          <h4>4</h4>
-          <p>4</p>
-          <a href="/4">4</a>
-        </article>
-      </li>
+    <ul class='carousel row gap'>
+      {[1, 2, 3, 4].map((item) => (
+        <li>
+          <article class='card'>
+            <h4>{item}</h4>
+            <p>{item}</p>
+          </article>
+        </li>
+      ))}
     </ul>
 </Layout>
 
