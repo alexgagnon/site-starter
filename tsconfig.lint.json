@@ -14,7 +14,7 @@
   },
   "include": [
     "src",
-    "lib",
+    "scripts",
     "eslint.config.js",
     "astro.config.ts",
     "vitest.config.ts"

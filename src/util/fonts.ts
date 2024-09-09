@@ -11,14 +11,14 @@ type Dirent = {
 };
 
 const {
-  build: { distDir }
-}: { build: { distDir: string } } = config;
+  build: { publicDir }
+}: { build: { publicDir: string } } = config;
 
 export async function getFonts() {
   if (import.meta.env.SSR) {
     debug('SSR mode');
     const baseDir = new URL(
-      join('..', '..', distDir, 'fonts'),
+      join('..', '..', publicDir, 'fonts'),
       import.meta.url
     );
     return (

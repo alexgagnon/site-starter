@@ -1,14 +1,15 @@
 ---
-import config from '../../site.config.json' with { type: 'json' };
+import Site from '@ferment-ui/astro/layouts/Site.astro';
+import Banner from '@ferment-ui/astro/components/Banner.astro'
+import Footer from '@ferment-ui/astro/components/Footer.astro';
 import { debug } from '../util/debug.js';
+import config from '../../site.config.json' with { type: 'json' };
+
 import type { Font } from '../env.d';
-import '../../../ferment-ui/packages/core/dist/fui.css';
-import '../assets/styles.css';
-import { FUIEmailAddress } from '../../../ferment-ui/packages/core/dist/index.js';
 
 const { siteTitle, companyLegalName } = config;
 
-const { title, description, og } = Astro.props.frontmatter || Astro.props;
+const { title, description } = Astro.props.frontmatter || Astro.props;
 
 // set up the fonts to download
 let fonts: Font[] = [];
@@ -23,169 +24,21 @@ if (import.meta.env.SSR) {
 debug('Fonts:', fonts);
 ---
 
-<!doctype html>
-<html lang="en" class="no-js" data-fonts={JSON.stringify(fonts)}>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title} | {siteTitle}</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="description" content={description} />
-    <link
-      rel="preload"
-      href="./svg/sprite.css.svg"
-      as="fetch"
-      type="image/svg+xml"
-      crossorigin="anonymous"
-    />
-    <script type="module" is:inline>
-      document.documentElement.classList.remove('no-js');
+<Site
+  siteTitle={siteTitle}
+  title={title}
+  description={description}
+>
+  <Banner slot='banner' role='banner'>
+    <nav>
+      <ul>
+        <li><a href='https://google.com'>Google</a></li>
+        <li><a href='https://example.org'>Example.org</a></li>
+      </ul>
+    </nav>
+  </Banner>
+  <slot />
+  <Footer companyLegalName={companyLegalName}>
 
-      const fontData = document.documentElement.dataset.fonts;
-
-      if (localStorage.getItem('debug')) {
-        console.debug('Fonts:', fontData);
-      }
-
-      const fonts = fontData
-        ? JSON.parse(fontData).map(
-            (font) => new FontFace(font.family, font.source, font.descriptors)
-          )
-        : [
-            // Add your fonts here, e.g. new FontFace('Inter', 'url(/fonts/inter.woff2)', { weight: 400, style: 'normal' }),
-            // https://developer.mozilla.org/en-US/docs/Web/API/CSS_Font_Loading_API
-          ];
-
-      await Promise.allSettled(
-        fonts.map((font) => {
-          document.fonts.add(font);
-          return font.load();
-        })
-      ).then((results) => {
-        document.documentElement.classList.add('fonts-loaded');
-        results.forEach((result) => {
-          if (result.status === 'rejected') {
-            console.error(result.reason);
-          }
-        });
-      });
-    </script>
-    {
-      og && (
-        <>
-          <meta property="og:title" content={og.title} />
-          <meta property="og:description" content={og.description} />
-          <meta property="og:image" content={og.image} />
-          <meta property="og:type" content={og.type} />
-        </>
-      )
-    }
-  </head>
-  <body>
-    <header>
-      <a href="#main" id="skip-link">Skip to main content</a>
-      <nav>
-        <ul class="row end ls-none">
-          <li><a href="/about">About us</a></li>
-          <li>
-            <FUIEmailAddress
-              user="ofni"
-              domain="ac.smcytilibaiv"
-              mailto="true"
-              client:load
-              ><svg slot="prefix">
-                <use href="/svg/sprite.css.svg#i-email"></use>
-              </svg></FUIEmailAddress>
-          </li>
-        </ul>
-        <ul class="row ls-none">
-          <li class="mr-auto">
-            <a href="/"><svg href="svg/sprite.css.svg#logo"></svg></a>
-          </li>
-          <li>
-            <a href="/absence-management">Absence Management Solutions</a>
-            <ul class="dropdown ls-none column center">
-              <li><a href="/present-ability">Present-ABILITY</a></li>
-              <li><a href="/renew-ability">Renew-ABILITY</a></li>
-              <li><a href="/occ-ability">Occ-ABILITY</a></li>
-              <li><a href="/adapt-ability">Adapt-ABILITY</a></li>
-              <li><a href="/contact">Get a quote</a></li>
-            </ul>
-          </li>
-          <li><a href="/hr-solutions">HR General Solutions</a></li>
-          <li>
-            <a href="/occupational-health-solutions">
-              Occupational Health Solutions
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </header>
-    <main id="main">
-      <slot />
-    </main>
-    <footer>
-      <section id="branding">
-        <h2>Monad Media</h2>
-        <p>Building the web, one component at a time.</p>
-      </section>
-      <section id="sitemap">
-        <h2>Sitemap</h2>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/services">Services</a></li>
-          <li><a href="/contact">Contact</a></li>
-        </ul>
-      </section>
-      <section id="contact">
-        <h2>Contact</h2>
-        <p>1234 Elm St.<br />Springfield, IL 62701</p>
-        <p>217-555-1234</p>
-      </section>
-      <p id="copyright">© {new Date().getFullYear()}, {companyLegalName}</p>
-      <p id="attribution">
-        Built by <a target="_blank" href="https://monad.media">Monad Media</a>
-      </p>
-    </footer>
-  </body>
-</html>
-<style>
-  footer {
-    display: grid;
-    grid-template-areas:
-      'branding'
-      'sitemap'
-      'contact'
-      'copyright'
-      'attribution';
-  }
-
-  @media screen and (min-width: 768px) {
-    footer {
-      grid-template-areas:
-        'branding sitemap contact'
-        'copyright attribution attribution';
-    }
-  }
-
-  #branding {
-    grid-area: branding;
-  }
-
-  #sitemap {
-    grid-area: sitemap;
-  }
-
-  #contact {
-    grid-area: contact;
-  }
-
-  #copyright {
-    grid-area: copyright;
-  }
-
-  #attribution {
-    grid-area: attribution;
-  }
-</style>
+  </Footer>
+</Site>

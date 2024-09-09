@@ -45,24 +45,21 @@
         "tsconfig.json",
         "astro.config.mjs"
       ],
-      "env": {
-        "NODE_ENV": "production"
-      },
       "service": true
     },
     "fonts:download": {
-      "command": "vite-node ./lib/download-fonts.ts",
+      "command": "tsx ./scripts/download-fonts.ts",
       "files": [
-        "lib/download-fonts.ts"
+        "scripts/download-fonts.ts"
       ],
       "output": [
         "assets/fonts/**/*"
       ]
     },
     "fonts:subset": {
-      "command": "vite-node ./lib/subset-fonts.ts",
+      "command": "tsx ./scripts/subset-fonts.ts",
       "files": [
-        "lib/subset-fonts.ts",
+        "scripts/subset-fonts.ts",
         "assets/fonts/**/*"
       ],
       "output": [
@@ -102,7 +99,7 @@
       "service": true
     },
     "svg": {
-      "command": "svg-sprite --symbol --symbol-dest public assets/svg/*.svg",
+      "command": "svg-sprite --symbol --dest --symbol-dest public assets/svg/*.svg",
       "files": [
         "assets/svg/",
         "package.json"
@@ -124,19 +121,20 @@
     }
   },
   "keywords": [],
-  "author": "",
+  "author": "alexgagnon",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "@astrojs/lit": "^4.3.0",
     "@astrojs/sitemap": "^3.1.6",
+    "@ferment-ui/astro": "file:../ferment-ui/packages/astro",
     "@webcomponents/template-shadowroot": "^0.2.1",
-    "astro": "^4.13.1",
+    "astro": "^4.15.4",
     "ferment-ui": "file:../ferment-ui/packages/core",
     "lit": "^3.1.4"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.1",
+    "@astrojs/check": "^0.9.3",
     "@eslint/js": "^9.7.0",
     "@types/eslint__js": "^8.42.3",
     "@types/eslint-config-prettier": "^6.11.3",
@@ -146,13 +144,14 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-astro": "^1.2.3",
     "husky": "^9.0.11",
+    "lightningcss": "^1.26.0",
     "lint-staged": "^15.2.7",
     "prettier": "^3.3.3",
     "svg-sprite": "^2.0.4",
+    "tsx": "^4.19.0",
     "type-fest": "^4.22.1",
     "typescript": "^5.5.3",
     "typescript-eslint": "^7.16.1",
-    "vite-node": "^2.0.4",
     "vitest": "^2.0.4",
     "wireit": "^0.14.5"
   },
