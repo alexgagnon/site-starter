@@ -14,7 +14,8 @@
     "lint": "wireit",
     "prepare": "husky",
     "preview": "wireit",
-    "svg": "wireit"
+    "svg:optimize": "wireit",
+    "svg:spritemap": "wireit"
   },
   "wireit": {
     "build": {
@@ -26,8 +27,7 @@
         "src/**/*",
         "public/**/*",
         "astro.config.mjs",
-        "tsconfig.json",
-        "vite.config.ts"
+        "tsconfig.json"
       ],
       "output": [
         "dist/**/*"
@@ -53,14 +53,14 @@
         "scripts/download-fonts.ts"
       ],
       "output": [
-        "assets/fonts/**/*"
+        "raw/fonts/**/*"
       ]
     },
     "fonts:subset": {
       "command": "tsx ./scripts/subset-fonts.ts",
       "files": [
         "scripts/subset-fonts.ts",
-        "assets/fonts/**/*"
+        "raw/fonts/**/*"
       ],
       "output": [
         "public/fonts/**/*"
@@ -98,14 +98,14 @@
       ],
       "service": true
     },
-    "svg": {
-      "command": "svg-sprite --symbol --dest --symbol-dest public assets/svg/*.svg",
+    "svg:optimize": {
+      "command": "svgo -f raw/svg/ -o public/svg/ --config svgo.config.cjs"
+    },
+    "svg:spritemap": {
+      "command": "tsx scripts/svg-spritemap.ts",
       "files": [
-        "assets/svg/",
+        "raw/svg/sprites/",
         "package.json"
-      ],
-      "output": [
-        "public/svg/"
       ]
     },
     "test": {
@@ -139,15 +139,18 @@
     "@types/eslint__js": "^8.42.3",
     "@types/eslint-config-prettier": "^6.11.3",
     "@types/node": "^20.14.12",
+    "@types/svg-sprite": "^0.0.39",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-astro": "^1.2.3",
+    "eslint-plugin-jsx-a11y": "^6.10.0",
     "husky": "^9.0.11",
     "lightningcss": "^1.26.0",
     "lint-staged": "^15.2.7",
     "prettier": "^3.3.3",
     "svg-sprite": "^2.0.4",
+    "svgo": "^3.3.2",
     "tsx": "^4.19.0",
     "type-fest": "^4.22.1",
     "typescript": "^5.5.3",
@@ -157,7 +160,7 @@
   },
   "lint-staged": {
     "*.{js,ts,md,mdx,astro}": [
-      "npm run format -- --check",
+      "npm run format -- --write",
       "npm run lint"
     ]
   },

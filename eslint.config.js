@@ -5,7 +5,7 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['.wireit', 'dist/']
+    ignores: ['.wireit', 'dist/', 'svgo.config.cjs']
   },
 
   eslint.configs.recommended,

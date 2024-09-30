@@ -5,6 +5,7 @@
     "module": "ESNext",
     "moduleResolution": "Bundler", // Use the bundler's algorithm to resolve modules (esbuild and Rollup, through Vite)
     "verbatimModuleSyntax": true, //
+    "allowSyntheticDefaultImports": true, // Allow default imports from modules with no default export
     "esModuleInterop": true, // Enable compatibility with CommonJS modules
     "resolveJsonModule": true, // Enable JSON module resolution
     "strict": true,

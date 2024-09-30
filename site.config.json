@@ -21,7 +21,7 @@
     "output": "static",
     "publicDir": "public",
     "distDir": "dist",
-    "assetsDir": "assets",
+    "rawDir": "raw",
     "srcDir": "src"
   }
 }

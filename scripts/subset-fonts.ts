@@ -14,10 +14,10 @@ const debug = Debug('app:subset-fonts');
 
 const {
   fonts,
-  build: { assetsDir, publicDir }
-}: { fonts: Font[]; build: { assetsDir: string; publicDir: string } } = config;
+  build: { rawDir, publicDir }
+}: { fonts: Font[]; build: { rawDir: string; publicDir: string } } = config;
 
-const srcDir = join(assetsDir, 'fonts');
+const srcDir = join(rawDir, 'fonts');
 const distDir = join(publicDir, 'fonts');
 
 checkConfig(fonts);

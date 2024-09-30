@@ -6,12 +6,14 @@ import Debug from 'debug';
 const debug = Debug('app:download-fonts');
 
 export type Variant = 'regular' | 'italic';
+
 export type SubsetOptions = {
   formats?: string;
   unicodeRange?: string;
   subset?: string;
   whitelist?: string;
 };
+
 export interface Font {
   family: string;
   variants: Record<Variant, SubsetOptions>;
@@ -50,10 +52,10 @@ export function getFileName(family: string, variant: Variant) {
 
 const {
   fonts,
-  build: { assetsDir }
+  build: { rawDir }
 } = config;
 
-const distDir = join(assetsDir, 'fonts');
+const distDir = join(rawDir as string, 'fonts');
 
 checkConfig(fonts as Font[]);
 

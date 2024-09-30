@@ -2,13 +2,8 @@ import { readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import config from '../../site.config.json' with { type: 'json' };
 import { debug } from './debug.js';
+import type { Dirent } from 'node:fs';
 import type { Font } from '../env.js';
-
-type Dirent = {
-  name: string;
-  path: string;
-  isFile: () => boolean;
-};
 
 const {
   build: { publicDir }
@@ -30,8 +25,9 @@ export async function getFonts() {
         .split('_');
       return {
         family,
-        source: `url("/fonts/${dirent.name}")`,
-        descriptors: { style }
+        descriptors: { style },
+        type: 'font/woff2',
+        href: `/fonts/${dirent.name}`
       } as Font;
     });
   } else {

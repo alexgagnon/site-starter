@@ -1,17 +1,17 @@
 ---
 import Site from '@ferment-ui/astro/layouts/Site.astro';
-import Banner from '@ferment-ui/astro/components/Banner.astro'
-import Footer from '@ferment-ui/astro/components/Footer.astro';
+import Banner from '@ferment-ui/astro/components/Banner.astro';
+import Footer from '../components/Footer.astro';
 import { debug } from '../util/debug.js';
 import config from '../../site.config.json' with { type: 'json' };
+import criticalCss from '../assets/css/critical.css?raw';
 
 import type { Font } from '../env.d';
 
 const { siteTitle, companyLegalName } = config;
+const { title, description, og } = Astro.props.frontmatter || Astro.props;
 
-const { title, description } = Astro.props.frontmatter || Astro.props;
-
-// set up the fonts to download
+// set up the fonts to use
 let fonts: Font[] = [];
 if (import.meta.env.SSR) {
   const { getFonts } = await import('../util/fonts.js');
@@ -28,8 +28,11 @@ debug('Fonts:', fonts);
   siteTitle={siteTitle}
   title={title}
   description={description}
+  fonts={fonts}
+  og={og}
 >
-  <Banner slot='banner' role='banner'>
+  <style slot='critical-css' set:html={criticalCss}></style>
+  <Banner slot='banner'>
     <nav>
       <ul>
         <li><a href='https://google.com'>Google</a></li>
@@ -38,7 +41,5 @@ debug('Fonts:', fonts);
     </nav>
   </Banner>
   <slot />
-  <Footer companyLegalName={companyLegalName}>
-
-  </Footer>
+  <Footer companyLegalName={companyLegalName} />
 </Site>

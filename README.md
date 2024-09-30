@@ -1,30 +1,25 @@
-# Node Starter
+# Site Starter
 
-Starter repo for Node.JS apps.
+A template used to quickly create high-performance websites using (Astro)[https://astro.build] and (Ferment UI)[https://github.com/ferment-ui].
 
-- wireit - script manager
-- typescript - static typing
-- vite-node - running typescript files directly
-- eslint & typescript-eslint - linting
-- prettier & editorconfig - formatting
-- vitest - unit testing using vite config
-- husky & lint-staged - commit control
-- pino - logging
-- opentelemetry (OTel) - telemetry
+## Setup
 
-NOTES:
+In order for things to work correctly, you must setup the project with the following rules:
 
-- Make sure you redact PII using pino's redact option in src/configs/logger.ts
-- Prettier will use configurations from the .editorconfig file.
-- You must require `pino-debug` before the process starts to initialize it correctly. For more options see [here](https://github.com/pinojs/pino-debug).
-- OTel still has limited support for ESM, so results may vary depending on what you're trying to instrument.
+- raw files like non-optimized svgs and non-subsetted/compressed font files fo into `./raw/svg/` and `./raw/fonts/`, respectively
+  - calling `npm run fonts:subset` will optimize/compress them and create new files in `./public/fonts/`
+  - calling `npm run svg:optimize` will optimize SVGs and create new files in `./public/svg/`
+  - calling `npm run svg:spritemap` will convert items in folders under `./public/svg/sprites/{name}/*` into single sprite maps in `./public/sprites/{name}.svg`
+
 
 ## Usage
 
 Scripts are controlled using Wireit, which includes features like script dependencies, automatic cleaning of output folders, caching, and a watch mode. If you make substantial changes to the project structure, you may need to update the `files` and/or `outputs` properties of the wireit tasks, otherwise the caching won't work as expected. See [the wireit docs](https://github.com/google/wireit/blob/main/README.md) for more details.
 
+Prettier is used for formatting (note that it can fallback to using .editorconfig if the file is present and a matching rule in prettier is not defined).
+
 ESLint has been augmented with typescript-eslint with Type Information mode activated for extra linting powers.
 
-When you commit, Husky runs Lint-Staged, which will run both ESLint and Prettier in "check" mode. If it fails, you need to correct the errors in the staged files (can often be done with `npm run format -- --write` and/or `npm run lint -- --fix`).
+When you commit, Husky runs Lint-Staged, which will run Prettier (with --write option) and ESLint in that order. If it fails, you need to correct the errors in the staged files.
 
-When deploying, the only files that are needed are those in `dist`, `package.json`, and potentially `ecosystem.config.cjs` if using `pm2` for process management.
+Deploy using Wrangler. The only files that should be needed are those in `dist`.

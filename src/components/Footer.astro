@@ -1,0 +1,17 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'footer'> {
+  companyLegalName: string;
+  copyrightClass?: string;
+  copyrightStyle?: string;
+}
+
+const { companyLegalName, copyrightClass, copyrightStyle, ...attrs } = Astro.props;
+---
+
+<footer role='contentinfo' {...attrs}>
+  <slot />
+  <slot name='copyright'><p class:list={['footer__copyright', copyrightClass]} style={copyrightStyle}>&copy; {companyLegalName}, <span onload='this.textContent = new Date().getFullYear().toString()'>{new Date().getFullYear()}</span></p></slot>
+  <slot name='credit' />
+</footer>

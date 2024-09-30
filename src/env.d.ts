@@ -4,6 +4,7 @@
 
 export type Font = {
   family: string;
-  source: string;
   descriptors: Record<string, string>;
+  type: string;
+  href: string;
 };
