@@ -6,10 +6,17 @@ import { debug } from '../util/debug.js';
 import config from '../../site.config.json' with { type: 'json' };
 import criticalCss from '../assets/css/critical.css?raw';
 
+import type { OpenGraph } from '@ferment-ui/astro';
 import type { Font } from '../env.d';
 
+interface Props {
+  title: string;
+  description: string;
+  og: OpenGraph
+};
+
 const { siteTitle, companyLegalName } = config;
-const { title, description, og } = Astro.props.frontmatter || Astro.props;
+const { title, description } = Astro.props;
 
 // set up the fonts to use
 let fonts: Font[] = [];

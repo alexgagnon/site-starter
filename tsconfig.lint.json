@@ -1,23 +1,17 @@
 {
+  "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "target": "ES6", // Keep the JavaScript version as modern as possible
-    "lib": ["ESNext", "DOM", "DOM.AsyncIterable"], // Define which language features are used
-    "module": "ESNext",
-    "moduleResolution": "Bundler", // Use the bundler's algorithm to resolve modules (esbuild and Rollup, through Vite)
-    "verbatimModuleSyntax": true, //
-    "allowSyntheticDefaultImports": true, // Allow default imports from modules with no default export
-    "esModuleInterop": true, // Enable compatibility with CommonJS modules
-    "resolveJsonModule": true, // Enable JSON module resolution
-    "strict": true,
-    "allowJs": true,
-    "checkJs": true,
-    "noEmit": true
+    "baseUrl": ".",
+    "paths": {
+      "@ferment-ui/astro": ["node_modules/@ferment-ui/astro"]
+    }
   },
   "include": [
     "src",
     "scripts",
     "eslint.config.js",
     "astro.config.ts",
-    "vitest.config.ts"
-  ]
+    "vitest.config.ts",
+    "svgo.config.cjs"
+  ],
 }

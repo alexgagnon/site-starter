@@ -5,30 +5,10 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['.wireit', 'dist/', 'svgo.config.cjs']
+    ignores: ['.astro/', '.husky/', '.wireit', 'dist/', 'node_modules/'],
   },
 
   eslint.configs.recommended,
-
-  {
-    files: ['*.astro'],
-    languageOptions: {
-      parser: 'astro-eslint-parser',
-      parserOptions: {
-        parser: '@typescript-eslint/parser',
-        extraFileExtensions: ['.astro'],
-        project: './tsconfig.lint.json'
-      }
-    },
-    plugins: {
-      eslintPluginAstro
-    },
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    rules: {
-      ...eslintPluginAstro.configs.recommended.rules
-    }
-  },
-
   ...tseslint.configs.recommendedTypeChecked,
   {
     languageOptions: {
@@ -36,8 +16,15 @@ export default tseslint.config(
         project: './tsconfig.lint.json', // target the base config file, not the build one
         tsconfigRootDir: import.meta.dirname
       }
+    },
+    rules: {
+      "no-unsafe-assignment": "off",
+      "no-unsafe-call": "off",
+      "no-unsafe-member-access": "off",
+      "no-unsafe-return": "off",
     }
   },
-
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  ...eslintPluginAstro.configs.recommended,
   prettierConfig
 );

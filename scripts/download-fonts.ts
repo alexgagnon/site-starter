@@ -55,7 +55,7 @@ const {
   build: { rawDir }
 } = config;
 
-const distDir = join(rawDir as string, 'fonts');
+const distDir = join(rawDir, 'fonts');
 
 checkConfig(fonts as Font[]);
 
