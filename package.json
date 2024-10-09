@@ -7,6 +7,7 @@
     "build": "wireit",
     "css:critical": "wireit",
     "dev": "wireit",
+    "favicons": "wireit",
     "fonts:download": "wireit",
     "fonts:subset": "wireit",
     "fonts": "wireit",
@@ -46,6 +47,13 @@
         "astro.config.mjs"
       ],
       "service": true
+    },
+    "favicons": {
+      "command": "tsx ./scripts/favicons.ts",
+      "files": [
+        "raw/favicon/",
+        "package.json"
+      ]
     },
     "fonts:download": {
       "command": "tsx ./scripts/download-fonts.ts",
@@ -145,6 +153,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-astro": "^1.2.3",
     "eslint-plugin-jsx-a11y": "^6.10.0",
+    "favicons": "^7.2.0",
     "husky": "^9.0.11",
     "lightningcss": "^1.26.0",
     "lint-staged": "^15.2.7",

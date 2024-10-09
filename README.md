@@ -6,11 +6,15 @@ A template used to quickly create high-performance websites using (Astro)[https:
 
 In order for things to work correctly, you must setup the project with the following rules:
 
-- raw files like non-optimized svgs and non-subsetted/compressed font files fo into `./raw/svg/` and `./raw/fonts/`, respectively
-  - calling `npm run fonts:subset` will optimize/compress them and create new files in `./public/fonts/`
-  - calling `npm run svg:optimize` will optimize SVGs and create new files in `./public/svg/`
-  - calling `npm run svg:spritemap` will convert items in folders under `./public/svg/sprites/{name}/*` into single sprite maps in `./public/sprites/{name}.svg`
+- raw files like favicons, non-optimized svgs and non-subsetted/compressed font files fo into `./raw/favicon/`, `./raw/svg/` and `./raw/fonts/`, respectively
+  - `npm run favicon` will generate multiple versions of the favicon for different platforms
+  - `npm run svg:optimize` will optimize SVGs and create new files in `./public/svg/`
+  - `npm run svg:spritemap` will convert items in folders under `./public/svg/sprites/{name}/*` into single sprite maps in `./public/sprites/{name}.svg`
+  - `npm run fonts:subset` will optimize/compress them and create new files in `./public/fonts/`
 
+## GOTCHAS!!
+
+- due to the CSS Cascade and the way Astro injects CSS, ALWAYS import 'Layout' (which imports global styles) before any components (which imports component specific styles). Otherwise your global CSS might override your component CSS.
 
 ## Usage
 
