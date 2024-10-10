@@ -4,9 +4,12 @@ import { favicons } from "favicons";
 import { author, description, name, version } from "../package.json" with { type: 'json' };
 
 const source = join('raw', 'favicon.svg'); // Source image(s). `string`, `buffer` or array of `string`
+const dir = 'favicons';
+const htmlDest = join('src', 'generated'); // Path for the HTML file to be saved. `string`
+const filesDest = join('public', dir); // Path for the favicons files to be saved. `string`
 
 const configuration = {
-  path: "/", // Path for overriding default icons path. `string`
+  path: "/favicons/", // Path for overriding default icons path. `string`
   appName: name, // Your application's name. `string`
   appShortName: name, // Your application's short_name. `string`. Optional. If not set, appName will be used
   appDescription: description, // Your application's description. `string`
@@ -58,10 +61,24 @@ const configuration = {
 };
 
 try {
+  await mkdir(filesDest, { recursive: true });
+  await mkdir(htmlDest, { recursive: true });
+
   const response = await favicons(source, configuration);
-  await Promise.allSettled([...response.images, ...response.files].map(({ name, contents }) => writeFile(join('public', name), contents)));
-  await mkdir(join('src', 'generated'), { recursive: true });
-  await writeFile(join('src', 'generated', 'favicons.html'), response.html.join('\n'));
+
+  await writeFile(join(htmlDest, 'favicons.html'), response.html.join('\n'));
+
+  await Promise.allSettled([...response.images, ...response.files].map(async ({ name, contents }) => {
+    // copy favicon.ico to root
+    if (name === 'favicon.ico') {
+      await writeFile(join('public', name), contents);
+    };
+
+    // copy other files to favicons directory
+    await writeFile(join(filesDest, name), contents);
+  }));
+
+  await Promise.allSettled(response.images.filter(({ name }) => name === 'favicon.ico').map(({ contents }) => writeFile(join('public', 'favicon.ico'), contents)));
 
 } catch (error) {
   console.log(error.message); // Error description e.g. "An unknown error has occurred"

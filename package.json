@@ -53,6 +53,11 @@
       "files": [
         "raw/favicon/",
         "package.json"
+      ],
+      "output": [
+        "public/favicons/",
+        "public/favicon.ico",
+        "src/generated/favicons.html"
       ]
     },
     "fonts:download": {

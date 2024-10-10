@@ -4,3 +4,6 @@ dist/
 node_modules/
 .tsbuildinfo
 .astro/
+
+public/favicons/
+src/generated/
