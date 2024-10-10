@@ -1,17 +1,18 @@
+import { mkdir, writeFile } from "fs/promises";
 import { join } from "path";
 import { favicons } from "favicons";
-import { version } from "../package.json" with { type: 'json' };
+import { author, description, name, version } from "../package.json" with { type: 'json' };
 
 const source = join('raw', 'favicon.svg'); // Source image(s). `string`, `buffer` or array of `string`
 
 const configuration = {
   path: "/", // Path for overriding default icons path. `string`
-  appName: null, // Your application's name. `string`
-  appShortName: null, // Your application's short_name. `string`. Optional. If not set, appName will be used
-  appDescription: null, // Your application's description. `string`
-  developerName: null, // Your (or your developer's) name. `string`
-  developerURL: null, // Your (or your developer's) URL. `string`
-  cacheBustingQueryParam: null, // Query parameter added to all URLs that acts as a cache busting system. `string | null`
+  appName: name, // Your application's name. `string`
+  appShortName: name, // Your application's short_name. `string`. Optional. If not set, appName will be used
+  appDescription: description, // Your application's description. `string`
+  developerName: author, // Your (or your developer's) name. `string`
+  developerURL: undefined, // Your (or your developer's) URL. `string`
+  cacheBustingQueryParam: undefined, // Query parameter added to all URLs that acts as a cache busting system. `string | null`
   dir: "auto", // Primary text direction for name, short_name, and description
   lang: "en-US", // Primary language for name and short_name
   background: "#fff", // Background colour for flattened icons. `string`
@@ -58,10 +59,10 @@ const configuration = {
 
 try {
   const response = await favicons(source, configuration);
+  await Promise.allSettled([...response.images, ...response.files].map(({ name, contents }) => writeFile(join('public', name), contents)));
+  await mkdir(join('src', 'generated'), { recursive: true });
+  await writeFile(join('src', 'generated', 'favicons.html'), response.html.join('\n'));
 
-  console.log(response.images); // Array of { name: string, contents: <buffer> }
-  console.log(response.files); // Array of { name: string, contents: <string> }
-  console.log(response.html); // Array of strings (html elements)
 } catch (error) {
   console.log(error.message); // Error description e.g. "An unknown error has occurred"
 }

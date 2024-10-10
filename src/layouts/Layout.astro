@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import { debug } from '../util/debug.js';
 import config from '../../site.config.json' with { type: 'json' };
 import criticalCss from '../assets/css/critical.css?raw';
+import Favicons from '../generated/favicons.html';
 
 import type { OpenGraph } from '@ferment-ui/astro';
 import type { Font } from '../env.d';
@@ -36,9 +37,9 @@ debug('Fonts:', fonts);
   title={title}
   description={description}
   fonts={fonts}
-  og={og}
 >
   <style slot='critical-css' set:html={criticalCss}></style>
+  <Favicons slot='favicons' />
   <Banner slot='banner'>
     <nav>
       <ul>
