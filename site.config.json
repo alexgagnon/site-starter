@@ -16,12 +16,5 @@
       },
       "variable": true
     }
-  ],
-  "build": {
-    "output": "static",
-    "publicDir": "public",
-    "distDir": "dist",
-    "rawDir": "raw",
-    "srcDir": "src"
-  }
+  ]
 }

@@ -37,6 +37,12 @@
     "css:critical": {
       "command": "critical index.html --base dist --inline --width 1440 --height 900 --ignore-external"
     },
+    "deploy": {
+      "command": "wrangler pages deploy",
+      "dependencies": [
+        "build"
+      ]
+    },
     "dev": {
       "command": "astro dev",
       "files": [
@@ -105,7 +111,7 @@
       "output": []
     },
     "preview": {
-      "command": "astro preview",
+      "command": "wrangler pages dev",
       "dependencies": [
         "build"
       ],
