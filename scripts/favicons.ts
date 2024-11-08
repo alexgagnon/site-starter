@@ -77,9 +77,7 @@ try {
     // copy other files to favicons directory
     await writeFile(join(filesDest, name), contents);
   }));
-
-  await Promise.allSettled(response.images.filter(({ name }) => name === 'favicon.ico').map(({ contents }) => writeFile(join('public', 'favicon.ico'), contents)));
-
 } catch (error) {
-  console.log(error.message); // Error description e.g. "An unknown error has occurred"
+  const message = error instanceof Error ? error.message : error;
+  console.log(message);
 }

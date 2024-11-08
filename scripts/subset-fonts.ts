@@ -8,7 +8,7 @@ import {
   type Font,
   type Variant
 } from './download-fonts.js';
-import config from '../site.config.json' with { type: 'json' };
+import config from '../src/site.config.js';
 
 const debug = Debug('app:subset-fonts');
 

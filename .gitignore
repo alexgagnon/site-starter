@@ -1,9 +1,22 @@
+# sensitive files
 *.env
-.wireit/
-dist/
-node_modules/
-.tsbuildinfo
-.astro/
 
+# build files
+.tsbuildinfo
+.wireit/
+.wrangler/
+dist/
 public/favicons/
+node_modules/
 src/generated/
+
+# test files
+coverage/
+lighthouse-report/
+playwright-report/
+
+# terraform
+.terraform
+*.tfstate
+
+

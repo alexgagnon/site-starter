@@ -1,6 +1,6 @@
 import { readdir } from 'node:fs/promises';
 import { join } from 'node:path';
-import config from '../../site.config.json' with { type: 'json' };
+import config from '../../site.config.js' with { type: 'json' };
 import { debug } from './debug.js';
 import type { Dirent } from 'node:fs';
 import type { Font } from '../env.js';

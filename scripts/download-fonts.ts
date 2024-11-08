@@ -1,5 +1,4 @@
-import 'dotenv/config';
-import config from '../site.config.json' with { type: 'json' };
+import config from '../src/site.config.js';
 import { writeFile, mkdir } from 'node:fs/promises';
 import { join, extname } from 'node:path';
 import Debug from 'debug';

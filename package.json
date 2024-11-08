@@ -159,7 +159,6 @@
     "@types/eslint-config-prettier": "^6.11.3",
     "@types/node": "^20.14.12",
     "@types/svg-sprite": "^0.0.39",
-    "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-astro": "^1.2.3",
