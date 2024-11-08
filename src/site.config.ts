@@ -1,5 +1,6 @@
-{
+export default {
   "id": "template",
+  "site": "https://example.com",
   "siteTitle": "Site Title",
   "slogan": "Slogan",
   "companyLegalName": "Company Legal Name",
@@ -16,5 +17,12 @@
       },
       "variable": true
     }
-  ]
+  ],
+  "build": {
+    "output": "static",
+    "publicDir": "public",
+    "distDir": "dist",
+    "rawDir": "raw",
+    "srcDir": "src"
+  }
 }
